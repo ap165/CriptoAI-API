@@ -1,62 +1,35 @@
-import logging
-from contextlib import asynccontextmanager
+import sys
+import os
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-)
-logger = logging.getLogger("ask-ai")
+# Add the backend root directory to Python's path before importing 'app' modules
+base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../"))
+if base_dir not in sys.path:
+    sys.path.append(base_dir)
 
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    logger.info("Starting up Ask.ai Server...")
-    yield 
-    logger.info("Shutting down Ask.ai Server...")
+from app.api.v1 import chat
+from app.core import config
 
 app = FastAPI(
-    title="Ask.ai Backend",
-    description="Internal company HR and policy chatbot API",
-    version="1.0.0",
-    lifespan=lifespan
+    title=config.PROJECT_NAME,
+    version="1.0.0"
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-class QueryRequest(BaseModel):
-    query: str
+app.include_router(chat.router, prefix="/api/v1/chat", tags=["Chat"])
 
-@app.get("/api/health", tags=["System"])
-async def health_check():
-    return {"status": "online", "service": "Ask.ai"}
-
-
-@app.post("/api/chat", tags=["Chat"])
-async def chat_endpoint(request: QueryRequest):
-    user_query = request.query
-    
-    # Placeholder for your RAG logic:
-    # 1. Get embedding for user_query
-    # 2. Search MongoDB Atlas
-    # 3. Call LLM (Groq/OpenAI)
-    
-    return {
-        "query": user_query,
-        "reply": "This is a placeholder response. Ask.ai is currently under construction!",
-        "sources": []
-    }
-
-
+@app.get("/")
+async def root():
+    return {"message": f"Welcome to the {config.PROJECT_NAME} API"}
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
