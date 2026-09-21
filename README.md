@@ -7,7 +7,7 @@ A Retrieval-Augmented Generation (RAG) backend built with FastAPI, LangChain, an
 * **Orchestration:** LangChain
 * **Vector Database:** MongoDB Atlas Vector Search
 * **Embeddings:** HuggingFace (`all-MiniLM-L6-v2` / 384 dimensions)
-* **LLM:** Google Gemini (`gemini-1.5-flash`)
+* **LLM:** Google Gemini (`gemini-3.5-flash-lite`)
 
 ## 📁 Project Structure
 ```text
