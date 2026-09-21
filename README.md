@@ -11,19 +11,52 @@ A Retrieval-Augmented Generation (RAG) backend built with FastAPI, LangChain, an
 
 ## 📁 Project Structure
 ```text
-backend/
-├── .env                        # Secret keys and database configuration
+├── .vscode/
+│   └── settings.json
 ├── app/
-│   ├── main.py                 # FastAPI application entry point
 │   ├── api/
+│   │   ├── auth/
+│   │   │   ├── __init__.py
+│   │   │   ├── login.py
+│   │   │   ├── register.py
+│   │   │   ├── reset_password.py
+│   │   │   ├── send_login_otp.py
+│   │   │   ├── send_otp.py
+│   │   │   ├── send_reset_otp.py
+│   │   │   └── verify_jwt.py
 │   │   └── v1/
-│   │       └── chat.py         # RAG endpoint (Retrieval & Gemini Generation)
+│   │       └── chat.py
 │   ├── core/
-│   │   └── config.py           # Centralized environment variable loader
+│   │   └── config.py
 │   ├── data/
-│   │   └── policies/           # Directory for raw documents (PDFs, TXT, etc.)
-│   └── scripts/
-│       └── ingest_data.py      # Script to chunk, embed, and upload data to MongoDB
+│   │   └── policies/
+│   │       ├── Employee-Handbook-for-Nonprofits-and-Small-Businesses.pdf
+│   │       ├── Employee-Handbook.pdf
+│   │       └── Leave-and-Holiday-Policy.pdf
+│   ├── scripts/
+│   │   ├── __init__.py
+│   │   ├── create_db.py
+│   │   └── ingest_data.py
+│   ├── templates/
+│   │   ├── __init__.py
+│   │   ├── login_otp.py
+│   │   ├── login.py
+│   │   ├── pass_changed.py
+│   │   ├── pass_reset_otp.py
+│   │   ├── reg_otp.py
+│   │   └── welcome.py
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   ├── _jwt.py
+│   │   ├── db.py
+│   │   ├── gen_otp.py
+│   │   ├── response.py
+│   │   ├── send_email.py
+│   │   └── validators.py
+│   └── main.py
+├── .gitignore
+├── README.md
+└── requirements.txt
 
 ```
 
