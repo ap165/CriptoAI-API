@@ -4,13 +4,14 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# Add the backend root directory to Python's path before importing 'app' modules
+# Adding the backend root directory to Python's path before importing 'app' modules
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../"))
 if base_dir not in sys.path:
     sys.path.append(base_dir)
 
 from app.api.v1 import chat
 from app.core import config
+from app.api import auth
 
 app = FastAPI(
     title=config.PROJECT_NAME,
@@ -26,6 +27,7 @@ app.add_middleware(
 )
 
 app.include_router(chat.router, prefix="/api/v1/chat", tags=["Chat"])
+app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
 
 @app.get("/")
 async def root():
@@ -33,3 +35,4 @@ async def root():
 
 if __name__ == "__main__":
     uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
+    
