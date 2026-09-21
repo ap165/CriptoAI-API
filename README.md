@@ -1,4 +1,3 @@
-```markdown
 # Company Policy RAG API
 
 A Retrieval-Augmented Generation (RAG) backend built with FastAPI, LangChain, and MongoDB Atlas. This API ingests company documents (PDF, TXT, DOCX, Excel), converts them into searchable vector embeddings using a local HuggingFace model, and uses Google Gemini to answer user questions based strictly on the retrieved document context.
@@ -122,9 +121,5 @@ Once running, the API is available at `http://127.0.0.1:8000`. You can test the 
     "app/data/policies/code_of_conduct.txt"
   ]
 }
-
-```
-
-```
 
 ```
