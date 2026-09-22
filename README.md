@@ -1,4 +1,3 @@
-```markdown
 # Company Policy RAG API
 
 A Retrieval-Augmented Generation (RAG) backend built with FastAPI, LangChain, and MongoDB Atlas. This API ingests company documents (PDF, TXT, DOCX, Excel), converts them into searchable vector embeddings using a local HuggingFace model, and uses Google Gemini to answer user questions based strictly on the retrieved document context.
@@ -8,23 +7,56 @@ A Retrieval-Augmented Generation (RAG) backend built with FastAPI, LangChain, an
 * **Orchestration:** LangChain
 * **Vector Database:** MongoDB Atlas Vector Search
 * **Embeddings:** HuggingFace (`all-MiniLM-L6-v2` / 384 dimensions)
-* **LLM:** Google Gemini (`gemini-1.5-flash`)
+* **LLM:** Google Gemini (`gemini-3.5-flash-lite`)
 
 ## 📁 Project Structure
 ```text
-backend/
-├── .env                        # Secret keys and database configuration
+├── .vscode/
+│   └── settings.json
 ├── app/
-│   ├── main.py                 # FastAPI application entry point
 │   ├── api/
+│   │   ├── auth/
+│   │   │   ├── __init__.py
+│   │   │   ├── login.py
+│   │   │   ├── register.py
+│   │   │   ├── reset_password.py
+│   │   │   ├── send_login_otp.py
+│   │   │   ├── send_otp.py
+│   │   │   ├── send_reset_otp.py
+│   │   │   └── verify_jwt.py
 │   │   └── v1/
-│   │       └── chat.py         # RAG endpoint (Retrieval & Gemini Generation)
+│   │       └── chat.py
 │   ├── core/
-│   │   └── config.py           # Centralized environment variable loader
+│   │   └── config.py
 │   ├── data/
-│   │   └── policies/           # Directory for raw documents (PDFs, TXT, etc.)
-│   └── scripts/
-│       └── ingest_data.py      # Script to chunk, embed, and upload data to MongoDB
+│   │   └── policies/
+│   │       ├── Employee-Handbook-for-Nonprofits-and-Small-Businesses.pdf
+│   │       ├── Employee-Handbook.pdf
+│   │       └── Leave-and-Holiday-Policy.pdf
+│   ├── scripts/
+│   │   ├── __init__.py
+│   │   ├── create_db.py
+│   │   └── ingest_data.py
+│   ├── templates/
+│   │   ├── __init__.py
+│   │   ├── login_otp.py
+│   │   ├── login.py
+│   │   ├── pass_changed.py
+│   │   ├── pass_reset_otp.py
+│   │   ├── reg_otp.py
+│   │   └── welcome.py
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   ├── _jwt.py
+│   │   ├── db.py
+│   │   ├── gen_otp.py
+│   │   ├── response.py
+│   │   ├── send_email.py
+│   │   └── validators.py
+│   └── main.py
+├── .gitignore
+├── README.md
+└── requirements.txt
 
 ```
 
@@ -122,9 +154,5 @@ Once running, the API is available at `http://127.0.0.1:8000`. You can test the 
     "app/data/policies/code_of_conduct.txt"
   ]
 }
-
-```
-
-```
 
 ```
